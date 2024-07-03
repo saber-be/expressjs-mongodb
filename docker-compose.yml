@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # MongoDB service
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - '27018:27017'
+    volumes:
+      - mongo-data:/data/db
+
+  # Express.js service
+  api:
+    build: .
+    container_name: express_api
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo
+
+volumes:
+  mongo-data:
