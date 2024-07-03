@@ -23,5 +23,18 @@ services:
     depends_on:
       - mongo
 
+  tests:
+    build:
+      context: .
+      dockerfile: dockerfile.test
+    # Command to run tests
+    command: npm test
+    # Optional: mount volumes if needed
+    volumes:
+      - .:/usr/src/app
+    # Optional: depends_on to ensure app service is ready
+    depends_on:
+      - api
+
 volumes:
   mongo-data:

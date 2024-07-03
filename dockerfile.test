@@ -1,0 +1,20 @@
+# Dockerfile.test for running Jest tests
+FROM node:16
+
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install npm dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+# Ensure proper permissions for files and directories
+RUN chown -R node:node /usr/src/app
+
+# Switch to non-root user
+USER node
+# Command to run tests
+CMD ["npm", "test"]
